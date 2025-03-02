@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
-    <link rel="shortcut icon" href="http://localhost/gymnastic/src/media/logos/favicon.ico" />
+    <link rel="shortcut icon" href="{{ asset('src/media/logos/favicon.ico') }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link
         rel="stylesheet"
@@ -31,20 +31,20 @@
     <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <link
-        href="http://localhost/gymnastic/src/plugins/custom/fullcalendar/fullcalendar.bundle.css"
+        href="{{ asset('src/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}"
         rel="stylesheet"
         type="text/css" />
     <link
-        href="http://localhost/gymnastic/src/plugins/custom/datatables/datatables.bundle.css"
+        href="{{ asset('src/plugins/custom/datatables/datatables.bundle.css') }}"
         rel="stylesheet"
         type="text/css" />
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
     <link
-        href="http://localhost/gymnastic/src/plugins/global/plugins.bundle.css"
+        href="{{ asset('src/plugins/global/plugins.bundle.css') }}"
         rel="stylesheet"
         type="text/css" />
-    <link href="http://localhost/gymnastic/src/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('src/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
         // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
@@ -126,7 +126,7 @@
                                     class="d-flex align-items-center">
                                     <img
                                         alt="Logo"
-                                        src="http://localhost/gymnastic/src/media/logos/demo20.svg"
+                                        src="{{ asset('src/media/logos/demo20.svg') }}"
                                         class="h-50px h-lg-50px" />
                                 </a>
                                 <!--end::Logo-->
@@ -276,7 +276,7 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
                                             <a
-                                                href="http://localhost/gymnastic/dashboard"
+                                                href="{{ route('dashboard') }}"
                                                 class="menu-link px-5">Go to Dashboard</a>
                                         </div>
                                         <!--end::Menu item-->
@@ -289,7 +289,7 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
                                             <a
-                                                href="http://localhost/gymnastic/login"
+                                                href="{{ route('login') }}"
                                                 class="menu-link px-5">Signup/Login</a>
                                         </div>
                                         <!--end::Menu item-->
@@ -1168,11 +1168,11 @@
         var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="http://localhost/gymnastic/src/plugins/global/plugins.bundle.js"></script>
-    <script src="http://localhost/gymnastic/src/js/scripts.bundle.js"></script>
+    <script src="{{ asset('src/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('src/js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="http://localhost/gymnastic/src/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+    <script src="{{ asset('src/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
@@ -1184,16 +1184,16 @@
     <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-    <script src="http://localhost/gymnastic/src/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="{{ asset('src/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="http://localhost/gymnastic/src/js/widgets.bundle.js"></script>
-    <script src="http://localhost/gymnastic/src/js/custom/widgets.js"></script>
-    <script src="http://localhost/gymnastic/src/js/custom/apps/chat/chat.js"></script>
-    <script src="http://localhost/gymnastic/src/js/custom/utilities/modals/upgrade-plan.js"></script>
-    <script src="http://localhost/gymnastic/src/js/custom/utilities/modals/create-campaign.js"></script>
-    <script src="http://localhost/gymnastic/src/js/custom/utilities/modals/create-app.js"></script>
-    <script src="http://localhost/gymnastic/src/js/custom/utilities/modals/users-search.js"></script>
+    <script src="{{ asset('src/js/widgets.bundle.js') }}"></script>
+    <script src="{{ asset('src/js/custom/widgets.js') }}"></script>
+    <script src="{{ asset('src/js/custom/apps/chat/chat.js') }}"></script>
+    <script src="{{ asset('src/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
+    <script src="{{ asset('src/js/custom/utilities/modals/create-campaign.js') }}"></script>
+    <script src="{{ asset('src/js/custom/utilities/modals/create-app.js') }}"></script>
+    <script src="{{ asset('src/js/custom/utilities/modals/users-search.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 </body>
