@@ -15,7 +15,7 @@
             <!--begin::Col-->
             <div class="col-xl-4 mb-xl-10">
                 <!--begin::Card widget 3-->
-                <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-start h-xl-100" style="background-color: #009ef7;background-image:url('{{ asset('src/media/svg/shapes/wave-bg-red.svg') }}')">
+                <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-start h-xl-100" style="background-color: #287fa8;background-image:url('{{ asset('src/media/svg/shapes/wave-bg-red.svg') }}')">
                     <!--begin::Card body-->
                     <div class="card-body d-flex align-items-start mb-3">
                         <!--begin::Info-->

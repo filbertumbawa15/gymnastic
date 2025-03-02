@@ -139,21 +139,21 @@ License: For each use you must have a valid license purchased only from above li
                 <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                     <!--begin::Logo-->
                     <a href="../../demo20/dist/index.html" class="mb-0 mb-lg-12">
-                        <img alt="Logo" src="{{ asset('src/media/logos/custom-1.png') }}" class="h-60px h-lg-75px" />
+                        <img alt="Logo" src="{{ asset('src/media/logos/custom-1.png') }}" class="h-100px h-lg-100px" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Image-->
                     <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{ asset('src/media/misc/auth-screens.png') }}" alt="" />
                     <!--end::Image-->
                     <!--begin::Title-->
-                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Fast, Efficient and Productive</h1>
+                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Strong, Fit, and Motivated</h1>
                     <!--end::Title-->
                     <!--begin::Text-->
-                    <div class="d-none d-lg-block text-white fs-base text-center">In this kind of post,
-                        <a href="#" class="opacity-75-hover text-warning fw-bold me-1">the blogger</a>introduces a person they’ve interviewed
-                        <br />and provides some background information about
-                        <a href="#" class="opacity-75-hover text-warning fw-bold me-1">the interviewee</a>and their
-                        <br />work following this is a transcript of the interview.
+                    <div class="d-none d-lg-block text-white fs-base text-center">In this type of post,
+                        <br />providing insights into their training routines, workout philosophies, and nutrition strategies.
+                        <a href="#" class="opacity-75-hover text-warning fw-bold me-1">Following this, </a>we share a detailed breakdown of their workout regimen,
+                        <br />tips for improving performance, and expert advice for achieving fitness goals.
+                        we introduce a fitness expert or athlete,
                     </div>
                     <!--end::Text-->
                 </div>

@@ -24,7 +24,7 @@
                                     <img
                                         alt="Logo"
                                         src="{{ asset('src/media/logos/demo20.svg') }}"
-                                        class="h-25px h-lg-30px" />
+                                        class="h-50px h-lg-50px" />
                                 </a>
                                 <!--end::Logo-->
                                 <!--begin::Tabs wrapper-->

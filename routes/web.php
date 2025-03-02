@@ -38,3 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/roles/get', [RoleController::class, 'get'])->name('roles.get');
     Route::resource('roles', RoleController::class);
 });
+
+Route::get('/', function () {
+    return view('landingpage');
+})->name('landingpage');

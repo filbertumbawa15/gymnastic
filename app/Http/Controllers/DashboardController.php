@@ -12,7 +12,10 @@ class DashboardController extends Controller
         $breadcrumb = $this->breadcrumb;
         if (auth()->user()->role->rolename == "FINANCE") {
             return view('homefinance', compact('breadcrumb'));
-        } else {
+        } else if (auth()->user()->role->rolename == "MEMBER"){
+            return view('homemember', compact('breadcrumb'));
+        }
+         else {
             return view('home', compact('breadcrumb'));
         }
     }
