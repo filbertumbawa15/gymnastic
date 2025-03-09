@@ -10,7 +10,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <button type="button" class="btn btn-primary mb-3" id="addButton" onclick="createUsers()">
+                        <button type="button" class="btn btn-primary mb-3" id="addButton" onclick="createPricing()">
                             Add
                         </button>
 
@@ -27,40 +27,39 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="crudModal" tabindex="-1" aria-labelledby="usersModalLabel" aria-hidden="true">
+<div class="modal fade" id="crudModal" tabindex="-1" aria-labelledby="featuresModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="crudModalTitle">Users Form</h5>
+                <h5 class="modal-title" id="crudModalTitle">Pricing Form</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Form for users -->
+                <!-- Form for features -->
                 <form class="form w-100" id="crudForm" data-action="add">
                     @csrf
                     <input type="hidden" class="form-control bg-transparent" id="id" name="id" autocomplete="off">
                     <div class="fv-row mb-3">
-                        <label for="name" class="form-label">Nama User</label>
+                        <label for="name" class="form-label">Pricing Name</label>
                         <input type="text" class="form-control bg-transparent" id="name" name="name" autocomplete="off">
                     </div>
+
                     <div class="fv-row mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control bg-transparent" id="email" name="email" autocomplete="off">
+                        <label for="price" class="form-label">Price</label>
+                        <div class="input-group mb-5">
+                            <span class="input-group-text">Rp</span>
+                            <input id="price" name="price" type="text" class="form-control" aria-label="Harga" />
+                        </div>
                     </div>
-                    <div class="fv-row mb-3" id="password_input">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control bg-transparent" id="password" name="password" autocomplete="off">
-                    </div>
+
                     <div class="fv-row mb-3">
-                        <label for="user_role" class="form-label">Role</label>
-                        <select class="form-select form-select-solid" name="user_role">
-                            <option selected disabled="disabled">Select the Role</option>
-                            @foreach($roles as $role)
-                            <option value="{{ $role->id }}">
-                                {{ $role->rolename }}
-                            </option>
+                        <label for="name" class="form-label">Features</label>
+                        <select name="features[]" id="features" class="form-select form-select-solid" data-control="select2" data-close-on-select="true" data-placeholder="Select a Feature" data-allow-clear="true" multiple="multiple">
+                            @foreach($features as $feature)
+                            <option value="{{ $feature->id }}">{{ $feature->name }}</option>
                             @endforeach
                         </select>
+
                     </div>
             </div>
             <div class="modal-footer">
@@ -104,63 +103,51 @@
 
 @push('scripts')
 <script>
-    var formValidation;
-
-    function initValidation() {
-        formValidation = FormValidation.formValidation(
-            document.querySelector("#crudForm"), {
-                fields: {
-                    name: {
-                        validators: {
-                            notEmpty: {
-                                message: "Nama User is required",
-                            },
-                        },
-                    },
-                    email: {
-                        validators: {
-                            notEmpty: {
-                                message: "Email is required",
-                            },
-                            regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: "The value is not a valid email address",
-                            },
-                        },
-                    },
-                    password: {
-                        validators: $('#crudForm').data('action') != "add" ? {} : {
-                            notEmpty: {
-                                message: "Password is required",
-                            },
-                            stringLength: {
-                                min: 6,
-                                message: "Password must be at least 6 characters",
-                            },
-                        },
-                    },
-                    user_role: {
-                        validators: {
-                            callback: {
-                                message: "Please select a role",
-                                callback: function(input) {
-                                    return input.value !== "" && input.value !== null;
-                                },
-                            },
+    var formValidation = FormValidation.formValidation(
+        document.querySelector("#crudForm"), {
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: "Feature Name is required",
                         },
                     },
                 },
-                plugins: {
-                    trigger: new FormValidation.plugins.Trigger(),
-                    bootstrap5: new FormValidation.plugins.Bootstrap5({
-                        rowSelector: ".fv-row",
-                        eleInvalidClass: "is-invalid",
-                        eleValidClass: "is-valid",
-                    }),
+                price: {
+                    validators: {
+                        notEmpty: {
+                            message: "Price is required",
+                        },
+                    },
                 },
-            }
-        );
-    }
+                price: {
+                    validators: {
+                        notEmpty: {
+                            message: "Price is required",
+                        },
+                        numeric: {
+                            message: "Price must be a valid number",
+                        },
+                    },
+                },
+                "features[]": {
+                    validators: {
+                        notEmpty: {
+                            message: "Please select at least one feature",
+                        },
+                    },
+                },
+            },
+            plugins: {
+                trigger: new FormValidation.plugins.Trigger(),
+                bootstrap5: new FormValidation.plugins.Bootstrap5({
+                    rowSelector: ".fv-row",
+                    eleInvalidClass: "is-invalid",
+                    eleValidClass: "is-valid",
+                }),
+            },
+        }
+    );
     let modalBody = $('#crudModal').find('.modal-body').html()
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -169,33 +156,32 @@
                 e.preventDefault();
                 let method
                 let url
-                let userId = $('#crudForm').find('[name=id]').val()
+                let pricingId = $('#crudForm').find('[name=id]').val()
                 let action = $('#crudForm').data('action')
                 const $form = $(this);
 
                 switch (action) {
                     case 'add':
                         method = 'POST'
-                        url = `{{ route('users.store') }}`
+                        url = `{{ route('pricing.store') }}`
                         break;
                     case 'edit':
                         method = 'PATCH'
-                        url = `{{ route('users.update', ':id') }}`
-                        url = url.replace(':id', userId);
+                        url = `{{ route('pricing.update', ':id') }}`
+                        url = url.replace(':id', pricingId);
                         break;
                     case 'delete':
                         method = 'DELETE'
-                        url = `{{ route('users.destroy', ':id') }}`
-                        url = url.replace(':id', userId);
+                        url = `{{ route('pricing.destroy', ':id') }}`
+                        url = url.replace(':id', pricingId);
                         break;
                     default:
                         method = 'POST'
-                        url = `{{ route('users.store') }}`
+                        url = `{{ route('pricing.store') }}`
                         break;
                 }
-                console.log(formValidation);
+
                 formValidation.validate().then(function(result) {
-                    console.log(result);
                     if (result == "Valid") {
                         document.querySelector("#btnSubmit").setAttribute(
                             "data-kt-indicator",
@@ -223,7 +209,6 @@
                                         },
                                     }).then(function(e) {
                                         if (e.isConfirmed) {
-                                            $('#crudModal').find('.modal-body').html(modalBody)
                                             $('#crudModal').modal('hide')
                                             $('#crudForm').trigger('reset')
                                             table.ajax.reload()
@@ -232,7 +217,10 @@
                                 }, 2e3)
                             },
                             error: function(xhr) {
-                                // Check if the response status code is 422 (validation error)
+                                document.querySelector("#btnSubmit").removeAttribute(
+                                    "data-kt-indicator"
+                                );
+                                (document.querySelector("#btnSubmit").disabled = !1);
                                 if (xhr.status === 422) {
                                     // Show SweetAlert with validation error messages
                                     // Extract validation error messages
@@ -279,10 +267,10 @@
                 formValidation.resetForm(true);
             });
         });
-    });
 
-    document.querySelector("#crudModal").addEventListener("show.bs.modal", function(event) {
-        initValidation();
+        $('#features').on('change', function() {
+            formValidation.revalidateField("features[]");
+        });
     });
 
     let table = $("#key-datatable").DataTable({
@@ -290,12 +278,9 @@
         serverSide: true,
         paging: true,
         pageLength: 10,
-        searchDelay: 500,
-        filter: true,
         lengthMenu: [10, 25, 50, 75, 100],
-        "searching": true,
         ajax: {
-            url: `{{ route('users.get') }}`,
+            url: `{{ route('pricing.get') }}`,
             data: data => {
                 let columns = data.columns
                 let searchableColumns = []
@@ -343,19 +328,19 @@
                 data: 'id',
             },
             {
-                title: 'NAME',
+                title: 'PRICING NAME',
                 data: 'name'
             },
             {
-                title: 'EMAIL',
-                data: 'email'
+                title: 'PRICE',
+                data: 'price',
+                render: function(data, type, row) {
+                    return 'Rp. ' + new Intl.NumberFormat('id-ID').format(data);
+                }
             },
             {
-                title: 'ROLES',
-                data: "rolename",
-                render: function(data, type, row) {
-                    return `<span class="badge badge-light-primary fw-semibold me-1">${data}</span>`
-                },
+                title: 'MODIFIED BY',
+                data: 'modifiedby'
             },
             {
                 title: 'CREATED_AT',
@@ -390,12 +375,7 @@
                     deleteButton.className = 'btn btn-sm btn-danger d-inline deleteButton '
                     deleteButton.innerText = 'Delete'
 
-                    let changePasswordButton = document.createElement('button')
-                    changePasswordButton.dataset.id = row.id
-                    changePasswordButton.className = 'btn btn-sm btn-info d-inline changePasswordButton '
-                    changePasswordButton.innerText = 'Change Password'
-
-                    return editButton.outerHTML + deleteButton.outerHTML + changePasswordButton.outerHTML
+                    return editButton.outerHTML + deleteButton.outerHTML
                 }
             },
         ],
@@ -445,7 +425,7 @@
         }, 10);
     });
 
-    function createUsers() {
+    function createPricing() {
         let form = $('#crudForm')
 
         $('.modal-loader').removeClass('d-none')
@@ -457,7 +437,7 @@
                             `)
         form.data('action', 'add')
         form.find(`.sometimes`).show()
-        $('#crudModalTitle').text('Create User')
+        $('#crudModalTitle').text('Create Pricing')
 
         $('#crudModal').modal('show')
     }
@@ -474,23 +454,18 @@
                                     `)
         form.data('action', 'edit')
         form.find(`.sometimes`).show()
-        form.find('#password_input').hide()
-        $('#crudModalTitle').text('Edit Users')
-
+        $('#crudModalTitle').text('Edit Pricing')
 
         Promise.all([
-            showUsers(form, id),
+            showPricing(form, id),
         ]).then(() => {
             $('#crudModal').modal('show')
         })
     });
 
-
     $(document).on('click', '.deleteButton', function() {
-        /* Handle onclick .deleteButton */
-        let id = $(this).data('id')
-
-        var url = "{{ route('users.destroy', ':id') }}";
+        var id = $(this).data('id')
+        var url = `{{ route('pricing.destroy', ':id') }}`
         url = url.replace(':id', id);
 
         Swal.fire({
@@ -507,6 +482,9 @@
                     method: 'DELETE',
                     url: url,
                     dataType: 'JSON',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content') // Get CSRF token from meta tag
+                    },
                     success: response => {
                         Swal.fire({
                             text: "You're data successfully deleted!",
@@ -518,6 +496,8 @@
                             },
                         }).then(function(e) {
                             if (e.isConfirmed) {
+                                $('#crudModal').modal('hide')
+                                $('#crudForm').trigger('reset')
                                 table.ajax.reload()
                             }
                         });
@@ -527,8 +507,8 @@
         })
     })
 
-    function showUsers(form, id) {
-        var url = "{{ route('users.show', ':id') }}";
+    function showPricing(form, id) {
+        var url = "{{ route('pricing.show', ':id') }}";
         url = url.replace(':id', id);
 
         $.ajax({
@@ -541,11 +521,13 @@
             success: response => {
                 $.each(response.data, (index, value) => {
                     let element = form.find(`[name="${index}"]`)
-                    console.log(index);
                     if (element.is('select')) {
                         element.val(value).trigger('change')
                     } else {
                         element.val(value)
+                    }
+                    if (index == 'features') {
+                        $('#crudForm').find(`[name="features[]"]`).val(JSON.parse(value)).change()
                     }
                 })
             }

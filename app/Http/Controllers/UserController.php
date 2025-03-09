@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -33,9 +34,9 @@ class UserController extends Controller
 
         if (request('filters')) {
             foreach (request('filters') as $index => $filter) {
-                if($index == "rolename"){
+                if ($index == "rolename") {
                     $query = $query->orWhere("roles.$index", 'LIKE', "%$filter%");
-                }else{
+                } else {
                     $query = $query->orWhere("users.$index", 'LIKE', "%$filter%");
                 }
             }
@@ -77,7 +78,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' => $request->user_role,
+            ];
+
+            $user = (new User())->processStore($data);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil disimpan',
+                'data' => $user
+            ], 201);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            throw $th;
+        }
     }
 
     /**
@@ -89,6 +112,7 @@ class UserController extends Controller
     public function show($id)
     {
         $data = User::findOrFail($id);
+        $data->user_role = $data->role_id;
         return response([
             'data' => $data
         ]);
@@ -114,7 +138,29 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' => $request->user_role,
+            ];
+
+            $user = (new User())->processUpdate($id, $data);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil disimpan',
+                'data' => $user
+            ], 201);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            throw $th;
+        }
     }
 
     /**
@@ -125,6 +171,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $user = (new User())->processDestroy($id);
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Berhasil dihapus',
+                'data' => $user
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 }

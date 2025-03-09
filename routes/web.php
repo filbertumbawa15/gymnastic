@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeatureController;
+use App\Http\Controllers\LandingpagesController;
+use App\Http\Controllers\PricingController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +40,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/roles/check-role', [RoleController::class, 'checkRole'])->name('check.role');
     Route::get('/roles/get', [RoleController::class, 'get'])->name('roles.get');
     Route::resource('roles', RoleController::class);
+
+    Route::post('/roles/check-feature', [FeatureController::class, 'checkFeature'])->name('check.feature');
+    Route::get('/features/get', [FeatureController::class, 'get'])->name('features.get');
+    Route::resource('features', FeatureController::class);
+
+    Route::get('/pricing/get', [PricingController::class, 'get'])->name('pricing.get');
+    Route::resource('pricing', PricingController::class);
+
+    Route::get('/payment/{pricingPlan}', [LandingpagesController::class, 'payment'])->name('payment.show');
+    Route::post('/storepay', [LandingpagesController::class, 'confirmpay'])->name('payment.confirm');
+    Route::get('/formpayment/{trx_id}', [LandingpagesController::class, 'paymentform'])->name('payment.form');
 });
 
-Route::get('/', function () {
-    return view('landingpage');
-})->name('landingpage');
+Route::get('/', [LandingpagesController::class, 'index'])->name('landingpage');

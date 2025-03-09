@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Members;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -98,11 +99,11 @@ class AuthController extends Controller
 
     public function verifyOtp(Request $request)
     {
+        $userid = User::where('uuid', $request->id)->first();
         $request->validate([
             'id' => 'required',
             'otp' => 'required|digits:6',
         ]);
-
         $user = User::where('uuid', $request->id)->where('otp', $request->otp)->exists();
         if ($user == false) {
             return response()->json([
@@ -110,6 +111,15 @@ class AuthController extends Controller
                 'uuid' => $request->otp,
             ], 422);
         } else {
+            $data = [
+                'user_id' => $userid->id,
+                'name' => $userid->name,
+                'email' => $userid->email,
+                'phone' => "",
+                'address' => "",
+                'status' => 'active',
+            ];
+            $member = Members::create($data);
             User::where('uuid', $request->id)->update(['is_verified' => true, 'otp' => null]);
             return response()->json([
                 'message' => 'Success',

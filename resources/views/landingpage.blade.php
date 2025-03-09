@@ -5,7 +5,7 @@
 <head>
     <base href="" />
     <title>
-        Metronic - The World's #1 Selling Bootstrap Admin Template by Keenthemes
+        GYM By KeenThemes
     </title>
     <meta charset="utf-8" />
     <meta
@@ -580,310 +580,54 @@
                                     <!--begin::Row-->
                                     <div class="row g-10">
                                         <!--begin::Col-->
+                                        @foreach($pricingPlans as $planGroup)
+                                        @php $plan = $planGroup->first(); @endphp
                                         <div class="col-xl-4">
                                             <div class="d-flex h-100 align-items-center">
                                                 <!--begin::Option-->
-                                                <div
-                                                    class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
+                                                <div class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
                                                     <!--begin::Heading-->
                                                     <div class="mb-7 text-center">
                                                         <!--begin::Title-->
-                                                        <h1 class="text-dark mb-5 fw-bolder">Harian</h1>
+                                                        <h1 class="text-dark mb-5 fw-bolder">{{ $plan->plan }}</h1>
                                                         <!--end::Title-->
                                                         <!--begin::Price-->
                                                         <div class="text-center">
-                                                            <span class="mb-2 text-primary">Rp.</span>
-                                                            <span
-                                                                class="fs-3x fw-bold text-primary"
-                                                                data-kt-plan-price-month="39"
-                                                                data-kt-plan-price-annual="399">10.000</span>
-                                                            <span class="fs-7 fw-semibold opacity-50">/
-                                                                <span data-kt-element="period">Mon</span></span>
+                                                            <span class="fs-3x fw-bold text-primary">{{ $plan->price }}</span>
                                                         </div>
                                                         <!--end::Price-->
                                                     </div>
                                                     <!--end::Heading-->
                                                     <!--begin::Features-->
                                                     <div class="w-100 mb-10">
+                                                        @foreach($planGroup as $feature)
                                                         <!--begin::Item-->
                                                         <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Tidak ada Batasan limit Waktu</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
+                                                            <span class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">{{ $feature->feature_name }}</span>
+                                                            @if($feature->status_check)
+                                                            <i class="ki-duotone ki-check-circle fs-1 text-success">
                                                                 <span class="path1"></span>
                                                                 <span class="path2"></span>
                                                             </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Free alat yang berada di gym</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Free Mentor (3 Alat)</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-600 flex-grow-1">Free Minuman</span>
+                                                            @else
                                                             <i class="ki-duotone ki-cross-circle fs-1 text-danger">
                                                                 <span class="path1"></span>
                                                                 <span class="path2"></span>
                                                             </i>
+                                                            @endif
                                                         </div>
                                                         <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-600 flex-grow-1">Statistik Kalori disertakan</span>
-                                                            <i class="ki-duotone ki-cross-circle fs-1 text-danger">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-600 flex-grow-1 pe-3">Dipandu jenis workout yang diprioritaskan</span>
-                                                            <i
-                                                                class="ki-duotone ki-cross-circle fs-1 text-danger">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
+                                                        @endforeach
                                                     </div>
                                                     <!--end::Features-->
                                                     <!--begin::Select-->
-                                                    <a href="#" class="btn btn-sm btn-primary">Select</a>
+                                                    <a href="{{ auth()->check() ? route('payment.show', $plan->plan_id) : route('login') }}" class="btn btn-sm btn-primary">Select</a>
                                                     <!--end::Select-->
                                                 </div>
                                                 <!--end::Option-->
                                             </div>
                                         </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-xl-4">
-                                            <div class="d-flex h-100 align-items-center">
-                                                <!--begin::Option-->
-                                                <div
-                                                    class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-20 px-10">
-                                                    <!--begin::Heading-->
-                                                    <div class="mb-7 text-center">
-                                                        <!--begin::Title-->
-                                                        <h1 class="text-dark mb-5 fw-bolder">Mingguan</h1>
-                                                        <!--end::Title-->
-                                                        <!--begin::Price-->
-                                                        <div class="text-center">
-                                                            <span class="mb-2 text-primary">Rp.</span>
-                                                            <span
-                                                                class="fs-3x fw-bold text-primary"
-                                                                data-kt-plan-price-month="339"
-                                                                data-kt-plan-price-annual="3399">50.000</span>
-                                                            <span class="fs-7 fw-semibold opacity-50">/
-                                                                <span data-kt-element="period">Mon</span></span>
-                                                        </div>
-                                                        <!--end::Price-->
-                                                    </div>
-                                                    <!--end::Heading-->
-                                                    <!--begin::Features-->
-                                                    <div class="w-100 mb-10">
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Tidak ada batasan limit waktu</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Free Alat yang berada di gym</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Free Mentor (Semua alat)</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-600 flex-grow-1 pe-3">Free Minuman</span>
-                                                            <i
-                                                                class="ki-duotone ki-cross-circle fs-1 text-danger">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-600 flex-grow-1 pe-3">Statisik Kalori disertakan</span>
-                                                            <i
-                                                                class="ki-duotone ki-cross-circle fs-1 text-danger">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-600 flex-grow-1 pe-3">Dipandu jenis workout yang diprioritaskan</span>
-                                                            <i
-                                                                class="ki-duotone ki-cross-circle fs-1 text-danger">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                    </div>
-                                                    <!--end::Features-->
-                                                    <!--begin::Select-->
-                                                    <a href="#" class="btn btn-sm btn-primary">Select</a>
-                                                    <!--end::Select-->
-                                                </div>
-                                                <!--end::Option-->
-                                            </div>
-                                        </div>
-                                        <!--end::Col-->
-                                        <!--begin::Col-->
-                                        <div class="col-xl-4">
-                                            <div class="d-flex h-100 align-items-center">
-                                                <!--begin::Option-->
-                                                <div
-                                                    class="w-100 d-flex flex-column flex-center rounded-3 bg-light bg-opacity-75 py-15 px-10">
-                                                    <!--begin::Heading-->
-                                                    <div class="mb-7 text-center">
-                                                        <!--begin::Title-->
-                                                        <h1 class="text-dark mb-5 fw-bolder">
-                                                            Bulanan
-                                                        </h1>
-                                                        <!--end::Title-->
-                                                        <!--begin::Price-->
-                                                        <div class="text-center">
-                                                            <span class="mb-2 text-primary">Rp.</span>
-                                                            <span
-                                                                class="fs-3x fw-bold text-primary"
-                                                                data-kt-plan-price-month="999"
-                                                                data-kt-plan-price-annual="9999">150.000</span>
-                                                            <span class="fs-7 fw-semibold opacity-50">/
-                                                                <span data-kt-element="period">Mon</span></span>
-                                                        </div>
-                                                        <!--end::Price-->
-                                                    </div>
-                                                    <!--end::Heading-->
-                                                    <!--begin::Features-->
-                                                    <div class="w-100 mb-10">
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Tidak ada batasan limit waktu</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Free Alat yang berada di gym</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Free Mentor (Semua alat)</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Free Minuman</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Statistik Kalori disertakan</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                        <!--begin::Item-->
-                                                        <div class="d-flex align-items-center mb-5">
-                                                            <span
-                                                                class="fw-semibold fs-6 text-gray-800 flex-grow-1 pe-3">Dipandu jenis workout yang diprioritaskan</span>
-                                                            <i
-                                                                class="ki-duotone ki-check-circle fs-1 text-success">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </div>
-                                                        <!--end::Item-->
-                                                    </div>
-                                                    <!--end::Features-->
-                                                    <!--begin::Select-->
-                                                    <a href="#" class="btn btn-sm btn-primary">Select</a>
-                                                    <!--end::Select-->
-                                                </div>
-                                                <!--end::Option-->
-                                            </div>
-                                        </div>
+                                        @endforeach
                                         <!--end::Col-->
                                     </div>
                                     <!--end::Row-->

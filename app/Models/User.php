@@ -63,4 +63,31 @@ class User extends Authenticatable
 
         return $user;
     }
+
+    public function processUpdate($id, array $data): User
+    {
+        $user = User::findOrFail($id);
+        $user->uuid = $data['uuid'] ?? "";
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = $data['password'];
+        $user->role_id = $data['role_id'];
+        $user->otp = $data['otp'] ?? "";
+        $user->modifiedby = auth()->user()->name ?? "GYM SYSTEM"; // Assuming you track who created the user
+
+        if (!$user->save()) {
+            throw new \Exception('Error storing user.');
+        }
+
+        return $user;
+    }
+
+    public function processDestroy($id): User
+    {
+        $user = new User();
+        $user = $user->where('id', $id)->first();
+        $user->delete();
+
+        return $user;
+    }
 }
