@@ -13,6 +13,20 @@
         <!--begin::Row-->
 
         <div class="row gy-5 gx-xl-10">
+            @if ($alert)
+            <div class="alert alert-{{ $alert['type'] }} d-flex align-items-center p-5">
+                <!-- Icon Based on Alert Type -->
+                <i class="ki-duotone ki-{{ $alert['type'] == 'warning' ? 'alert-circle' : ($alert['type'] == 'danger' ? 'alert-triangle' : 'check-circle') }} fs-2hx text-{{ $alert['type'] }} me-4"></i>
+
+                <div class="d-flex flex-column">
+                    <h4 class="mb-1 text-dark">Membership Status</h4>
+                    <span>{{ $alert['message'] }}</span>
+                    @isset($alert['button_text'])
+                    <a href="#" class="btn btn-sm btn-{{ $alert['type'] == 'info' ? 'info' : ($alert['type'] == 'warning' ? 'primary' : 'danger') }} mt-3">{{ $alert['button_text'] }}</a>
+                    @endisset
+                </div>
+            </div>
+            @endif
             <!--begin::Col-->
             <div class="col-xxl-9">
                 <!--begin::Row-->
