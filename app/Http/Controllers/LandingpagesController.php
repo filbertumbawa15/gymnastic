@@ -177,6 +177,8 @@ class LandingpagesController extends Controller
                             ? date('Y-m-d H:i:s', strtotime($result['payment_date'] . ' +1 year'))
                             : date('Y-m-d H:i:s', strtotime($result['payment_date']))))
             ]);
+
+            // dd($member->pricingplan_id);
         }
         return view('paymentform', compact('breadcrumb', 'transaction'));
     }

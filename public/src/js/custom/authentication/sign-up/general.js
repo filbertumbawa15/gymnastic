@@ -123,7 +123,7 @@ var KTSignupGeneral = (function () {
                                                     ),
                                                         (t.disabled = !1),
                                                         Swal.fire({
-                                                            text: "You have successfully registered, check the OTP for verification!",
+                                                            text: "You have successfully registered, Now you can logged in as a member",
                                                             icon: "success",
                                                             buttonsStyling: !1,
                                                             confirmButtonText:
@@ -141,7 +141,7 @@ var KTSignupGeneral = (function () {
                                                                         "data-kt-redirect-url"
                                                                     );
                                                                 r &&
-                                                                    (location.href = `gymnastic/verify-otp/${response.uuid}`);
+                                                                    (location.href = `gymnastic/login`);
                                                             }
                                                         });
                                                 }, 1500);

@@ -69,21 +69,27 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role_id' => 3,
-                'otp' => $otp,
+                'is_verified' => true,
+                'otp' => null,
             ];
 
             $user = (new User())->processStore($data);
 
 
-            // Send OTP via email
-            Mail::raw("Your OTP is: $otp", function ($message) use ($user) {
-                $message->to($user->email)->subject('Verify Your Account');
-            });
+            $membersData = [
+                'user_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'phone' => "",
+                'address' => "",
+                'status' => 'active',
+            ];
+            Members::create($membersData);
 
             DB::commit();
 
             return response()->json([
-                'message' => 'Verify the OTP',
+                'message' => 'Success',
                 'uuid' => $valueUUID,
             ]);
         } catch (\Throwable $th) {

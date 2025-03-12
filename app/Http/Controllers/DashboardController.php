@@ -48,12 +48,14 @@ class DashboardController extends Controller
                     'type' => 'info',
                     'message' => "You do not have an active membership. Please subscribe to a plan to access the benefits.",
                     'button_text' => 'Subscribe Now',
-                    'button_link' => route('membership.subscribe'),
                 ];
             }
             return view('homemember', compact('breadcrumb', 'alert'));
         } else {
-            return view('home', compact('breadcrumb'));
+            $memberdays = Members::where('pricingplan_id', 1)->get();
+            $membermonths = Members::where('pricingplan_id', 2)->get();
+            $memberyears = Members::where('pricingplan_id', 3)->get();
+            return view('home', compact('breadcrumb','memberdays', 'membermonths', 'memberyears'));
         }
     }
 }

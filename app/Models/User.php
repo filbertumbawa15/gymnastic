@@ -61,6 +61,19 @@ class User extends Authenticatable
             throw new \Exception('Error storing user.');
         }
 
+        $membersData = [
+            'user_id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => "",
+            'address' => "",
+            'status' => 'active',
+        ];
+
+        if ($data['role_id'] == 3) {
+            Members::create($membersData);
+        }
+
         return $user;
     }
 

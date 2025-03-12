@@ -306,7 +306,7 @@
                                         },
                                     }).then(function(e) {
                                         document.querySelector("#kt_subscriptions_create_new").reset();
-                                        window.location.href = `formpayment/${response.trx_id}`;
+                                        window.location.href = `{{config('app.url')}}formpayment/${response.trx_id}`;
                                     });
                                 }, 2e3)
                             },

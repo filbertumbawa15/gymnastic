@@ -17,7 +17,7 @@ class Members extends Model
         'email',
         'phone',
         'address',
-        'pricing_plan_id',
+        'pricingplan_id',
         'start_date',
         'end_date',
         'status',
